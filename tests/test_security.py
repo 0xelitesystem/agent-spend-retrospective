@@ -106,7 +106,7 @@ def test_top_and_list_escape_transcript_file_names(simple_transcript, monkeypatc
 # ---- Markdown / HTML injection ----------------------------------------------
 
 
-_KNOWN_HEADINGS = {"# agent-cost report", "## ⚠ Runaway loops", "## Cost by model",
+_KNOWN_HEADINGS = {"# agent-spend-retrospective report", "## ⚠ Runaway loops", "## Cost by model",
                    "## Top expensive turns", "## Context bloat offenders",
                    "## Cache efficiency"}
 

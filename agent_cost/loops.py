@@ -1,10 +1,10 @@
-"""Runaway-loop / death-spiral detection, agent-cost's headline feature.
+"""Runaway-loop / death-spiral detection, agent-spend-retrospective's headline feature.
 
 The pattern that silently 10x's a bill isn't expensive single calls; it's the
 agent getting stuck and repeating the SAME action over and over (re-running a
 failing command, re-reading the same file, retrying a broken edit) while every
 iteration re-sends the (now bloated) context and pays for it again. Live
-circuit-breakers stop this in real time; agent-cost finds it after the fact in
+circuit-breakers stop this in real time; agent-spend-retrospective finds it after the fact in
 the transcript you already have.
 
 Detection is deliberately simple and explainable (these are heuristics, never

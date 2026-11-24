@@ -1,4 +1,4 @@
-"""Data models for agent-cost.
+"""Data models for agent-spend-retrospective.
 
 A Session is an ordered list of Events. The shapes mirror agent-receipts
 (its sibling project) so the parser conventions match, but cost analysis

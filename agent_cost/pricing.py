@@ -1,6 +1,6 @@
 """Pricing table: model id -> per-million-token (MTok) USD rates.
 
-WHY a hand-maintained dict and not an API call: agent-cost has ZERO runtime
+WHY a hand-maintained dict and not an API call: agent-spend-retrospective has ZERO runtime
 dependencies and never touches the network, so prices have to live in code.
 The cost is that THESE NUMBERS GO STALE, so every row below carries the date
 it was read off the vendor's own price list, and you can override the whole

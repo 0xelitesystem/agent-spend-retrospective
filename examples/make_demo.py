@@ -5,7 +5,7 @@ file read that bloats every prompt after it. Run: python examples/make_demo.py
 The transcript is written the way Claude Code writes one: a single API
 response becomes SEVERAL records, one per content block, and every record
 repeats that response's usage with a running output_tokens. They share a
-message id and a requestId, which is how agent-cost counts the response once
+message id and a requestId, which is how agent-spend-retrospective counts the response once
 instead of once per record. Sum the records naively and this demo reads about
 2x its true cost.
 """

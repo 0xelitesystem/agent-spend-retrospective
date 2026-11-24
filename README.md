@@ -1,8 +1,8 @@
-# agent-cost
+# agent-spend-retrospective
 
-> Your agent session cost $12. **agent-cost tells you which 30 seconds spent $9**, no proxy, no setup.
+> Your agent session cost $12. **agent-spend-retrospective tells you which 30 seconds spent $9**, no proxy, no setup.
 
-`agent-cost` is a retrospective forensic analyzer for AI agent sessions. You point it at a finished transcript and it tells you where the tokens and the money went, by model, by turn, by tool, and, critically, it **detects runaway loops after the fact**: the death-spiral where the agent gets stuck repeating one action and silently 10x's your bill.
+`agent-spend-retrospective` is a retrospective forensic analyzer for AI agent sessions. You point it at a finished transcript and it tells you where the tokens and the money went, by model, by turn, by tool, and, critically, it **detects runaway loops after the fact**: the death-spiral where the agent gets stuck repeating one action and silently 10x's your bill.
 
 No proxy. No SDK. No API key. It reads the transcript you already have on disk.
 
@@ -14,12 +14,12 @@ Agents make unbounded LLM calls on your behalf. Most of the time that's fine; so
 
 The tools that exist to stop this, Agent Firewall, AgentFuse, LiteLLM budget caps, are **live, preventive proxies**: you install them *in front of* your API and they cut calls off in real time. Useful, but they're infrastructure you have to set up before the fact.
 
-`agent-cost` is the complement. It's **retrospective and zero-setup**. The session already happened; the transcript already has the token counts. This reads them and explains the bill, including the loop the live guard would have caught, so you can see it even when you never had a guard installed.
+`agent-spend-retrospective` is the complement. It's **retrospective and zero-setup**. The session already happened; the transcript already has the token counts. This reads them and explains the bill, including the loop the live guard would have caught, so you can see it even when you never had a guard installed.
 
 ## What it shows
 
 ```
-  agent-cost, where the tokens and money went
+  agent-spend-retrospective, where the tokens and money went
   session demo-session · 22 events · /home/dev/acme-api
 
   TOTAL EST. COST  $0.61
@@ -55,7 +55,7 @@ The tools that exist to stop this, Agent Firewall, AgentFuse, LiteLLM budget cap
 That's a real report of [`examples/demo-session.jsonl`](examples/demo-session.jsonl), an agent that retried one failing test command 7 times before noticing a missing dependency, while a single 6,400-line file read sat in context inflating every prompt. The loop alone burned ~$0.49 of a $0.61 session. Run it yourself:
 
 ```bash
-agent-cost report examples/demo-session.jsonl
+agent-spend-retrospective report examples/demo-session.jsonl
 ```
 
 Reports mask common credential shapes (tokens, keys, passwords, authorization headers), but masking is pattern based: review a report before you share it.
@@ -63,7 +63,7 @@ Reports mask common credential shapes (tokens, keys, passwords, authorization he
 ## Install
 
 ```bash
-pip install git+https://github.com/0xelitesystem/agent-cost
+pip install git+https://github.com/0xelitesystem/agent-spend-retrospective
 ```
 
 Python 3.10+. No other dependencies.
@@ -72,29 +72,29 @@ Python 3.10+. No other dependencies.
 
 ```bash
 # Full report for one session (path, session-id prefix, or 'latest')
-agent-cost report latest
-agent-cost report ./examples/demo-session.jsonl
-agent-cost report 4f2a9c1               # session-id prefix
+agent-spend-retrospective report latest
+agent-spend-retrospective report ./examples/demo-session.jsonl
+agent-spend-retrospective report 4f2a9c1               # session-id prefix
 
 # Everything on this machine, every response counted once
-agent-cost total
-agent-cost total --json
+agent-spend-retrospective total
+agent-spend-retrospective total --json
 
 # Which of my recent sessions cost the most?
-agent-cost top --limit 10
+agent-spend-retrospective top --limit 10
 
 # List recent transcripts
-agent-cost list
+agent-spend-retrospective list
 
 # Machine-readable output / save a Markdown report
-agent-cost report latest --json
-agent-cost report latest --md cost-report.md
+agent-spend-retrospective report latest --json
+agent-spend-retrospective report latest --md cost-report.md
 
 # Use it as a budget gate (exit 1 if the session blew past $5)
-agent-cost report latest --fail-over 5.00
+agent-spend-retrospective report latest --fail-over 5.00
 
 # Override the built-in prices with your own table
-agent-cost report latest --prices my-prices.json
+agent-spend-retrospective report latest --prices my-prices.json
 ```
 
 `--prices` takes a JSON file shaped like the built-in table, one entry per model id, rates in USD per million tokens:
@@ -116,7 +116,7 @@ A model that is not in the table is **unpriced**, not guessed: its tokens are co
 
 ## Counting: one API response, counted once
 
-Claude Code writes a single API response as SEVERAL JSONL records, one per content block, and every one of them repeats that response's `message.usage`. Summing usage record by record therefore counts the same tokens several times over. agent-cost counts each response once:
+Claude Code writes a single API response as SEVERAL JSONL records, one per content block, and every one of them repeats that response's `message.usage`. Summing usage record by record therefore counts the same tokens several times over. agent-spend-retrospective counts each response once:
 
 - deduplicate by `message.id`, globally across every transcript, because a subagent file can carry a copy of a parent's response
 - fall back to `requestId`, then `uuid`, for a record that carries no message id
@@ -141,16 +141,16 @@ It parses the JSONL transcript (vendored parser, no dependencies), reduces the r
 ## Part of the agent accountability suite
 
 - [donediff](https://github.com/0xelitesystem/donediff), did the agent's claims ("tests pass") match reality?
-- [agent-leaks](https://github.com/0xelitesystem/agent-leaks), did it leak secrets into the transcript?
+- [agent-transcript-redactor](https://github.com/0xelitesystem/agent-transcript-redactor), did it leak secrets into the transcript?
 - [cantundo](https://github.com/0xelitesystem/cantundo), what irreversible actions did it take?
 - [rulediff](https://github.com/0xelitesystem/rulediff), did it follow your `CLAUDE.md`?
-- **agent-cost**, where did the tokens and money go?
+- **agent-spend-retrospective**, where did the tokens and money go?
 
 ## Roadmap
 
 - Auto-pull current provider prices (opt-in, still offline by default)
 - More providers and model families in the default table
-- Per-project and per-day breakdowns of `agent-cost total`
+- Per-project and per-day breakdowns of `agent-spend-retrospective total`
 - Tighter integration with the agent-receipts suite (cost + correctness in one pass)
 
 ## More

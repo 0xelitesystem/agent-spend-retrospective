@@ -1,4 +1,4 @@
-"""agent-cost: read a finished agent session and explain where the money went."""
+"""agent-spend-retrospective: read a finished agent session and explain where the money went."""
 
 __version__ = "0.2.0"
 

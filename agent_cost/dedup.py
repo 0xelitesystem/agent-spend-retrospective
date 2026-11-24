@@ -4,7 +4,7 @@ THE DEFECT THIS FIXES: a single Claude Code API response is written to the
 transcript as SEVERAL JSONL lines, one per content block, and EVERY one of
 those lines repeats the same `message.usage` object. Summing usage line by
 line therefore counts the same tokens two, three, five times over. On real
-transcripts that inflated agent-cost's totals by roughly 4.8x, and the error
+transcripts that inflated agent-spend-retrospective's totals by roughly 4.8x, and the error
 grows with how chatty the turn was, so it is not even a constant you could
 divide out.
 

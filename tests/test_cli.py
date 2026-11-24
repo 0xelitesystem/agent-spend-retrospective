@@ -40,7 +40,7 @@ def test_markdown_report(simple_transcript, tmp_path):
     out = tmp_path / "report.md"
     assert main(["report", simple_transcript, "--md", str(out), "--no-color"]) == 0
     content = out.read_text(encoding="utf-8")
-    assert "agent-cost report" in content
+    assert "agent-spend-retrospective report" in content
     assert "Cost by model" in content
 
 

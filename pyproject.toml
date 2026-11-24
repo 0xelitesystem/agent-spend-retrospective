@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "agent-cost"
+name = "agent-spend-retrospective"
 version = "0.2.0"
 description = "Read a finished agent session and explain where the tokens and money went, including runaway loops. No proxy, no setup."
 readme = "README.md"
@@ -22,11 +22,11 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/0xelitesystem/agent-cost"
-Issues = "https://github.com/0xelitesystem/agent-cost/issues"
+Homepage = "https://github.com/0xelitesystem/agent-spend-retrospective"
+Issues = "https://github.com/0xelitesystem/agent-spend-retrospective/issues"
 
 [project.scripts]
-agent-cost = "agent_cost.cli:main"
+agent-spend-retrospective = "agent_cost.cli:main"
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]

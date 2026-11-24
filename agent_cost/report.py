@@ -123,7 +123,7 @@ def render_terminal(result: CostResult, color: bool | None = None) -> str:
     title = _safe(session.slug or Path(session.path).stem[:12])
     tool_calls = session.tool_calls()
     out("")
-    out(_paint("  agent-cost", _BOLD, _CYAN, enabled=color)
+    out(_paint("  agent-spend-retrospective", _BOLD, _CYAN, enabled=color)
         + _paint(", where the tokens and money went", _DIM, enabled=color))
     out(_paint(f"  session {title} · {len(session.events)} events"
                + (f" · {_safe(session.cwd)}" if session.cwd else ""),
@@ -234,7 +234,7 @@ def render_total(rolled: Aggregate, transcripts: int, duplicate_lines: int,
     out = lines.append
     u = rolled.total_usage
     out("")
-    out(_paint("  agent-cost", _BOLD, _CYAN, enabled=color)
+    out(_paint("  agent-spend-retrospective", _BOLD, _CYAN, enabled=color)
         + _paint(f", {transcripts:,} transcripts, "
                  f"{rolled.responses:,} API responses", _DIM, enabled=color))
     out("")
@@ -363,7 +363,7 @@ def render_json(result: CostResult) -> str:
 def render_markdown(result: CostResult) -> str:
     c = result.cache
     lines = [
-        "# agent-cost report",
+        "# agent-spend-retrospective report",
         "",
         f"- **Transcript:** {_md_code(Path(result.session.path).name)}",
         f"- **Project:** {_md_code(result.session.cwd or 'unknown')}",

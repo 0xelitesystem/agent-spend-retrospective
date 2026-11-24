@@ -8,7 +8,7 @@ Loop detection lives in loops.py and is folded in by analyze().
 Counting note: a transcript writes one API response across several records
 that each repeat the same usage block, so the tokens are read from ONE record
 per response (the one with the largest output_tokens). Summing every record,
-which is what agent-cost used to do, overstated real sessions by about 4.8x.
+which is what agent-spend-retrospective used to do, overstated real sessions by about 4.8x.
 
 Pricing notes: cache writes are billed by TTL, 1.25x input for the 5-minute
 cache and 2x for the 1-hour cache, so the split on usage.cache_creation is

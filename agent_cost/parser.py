@@ -4,7 +4,7 @@ Format notes (observed against Claude Code 2.x transcripts):
 - Each line is a JSON object with a top-level "type".
 - "assistant" records carry message.content (a list of blocks: type=="text"
   is prose, type=="tool_use" is a tool invocation with id/name/input) AND
-  the part agent-cost cares about: message.model and message.usage.
+  the part agent-spend-retrospective cares about: message.model and message.usage.
 - ONE API RESPONSE IS WRITTEN AS SEVERAL RECORDS, one per content block, and
   every one of them REPEATS the same usage object. So the parser keeps each
   record's usage AND the response identity (message.id, requestId, uuid) that

@@ -1,6 +1,6 @@
 """Regression tests for the counting defect: one API response, counted once.
 
-agent-cost used to sum `message.usage` on every assistant RECORD. Claude Code
+agent-spend-retrospective used to sum `message.usage` on every assistant RECORD. Claude Code
 writes one API response as several records that each repeat that usage, so the
 old code multiplied real sessions by roughly 4.8x. Every test here fails if
 naive per-record summing comes back.

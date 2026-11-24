@@ -1,10 +1,10 @@
-"""agent-cost: read a finished agent session and explain where the money went.
+"""agent-spend-retrospective: read a finished agent session and explain where the money went.
 
 Usage:
-  agent-cost report <transcript.jsonl | session-id-prefix | latest> [options]
-  agent-cost total [--project NAME]
-  agent-cost top [--project NAME] [--limit N]
-  agent-cost list [--project NAME] [--limit N]
+  agent-spend-retrospective report <transcript.jsonl | session-id-prefix | latest> [options]
+  agent-spend-retrospective total [--project NAME]
+  agent-spend-retrospective top [--project NAME] [--limit N]
+  agent-spend-retrospective list [--project NAME] [--limit N]
 
 Options:
   --project NAME    only consider transcripts whose project folder matches
@@ -68,10 +68,10 @@ def _cmd_report(args: argparse.Namespace) -> int:
         prices = _load_prices_arg(args)
         result = analyze_cost(args.target, args.project, prices=prices)
     except FileNotFoundError as exc:
-        print(f"agent-cost: {exc}", file=sys.stderr)
+        print(f"agent-spend-retrospective: {exc}", file=sys.stderr)
         return 2
     except (ValueError, OSError) as exc:
-        print(f"agent-cost: could not load prices: {exc}", file=sys.stderr)
+        print(f"agent-spend-retrospective: could not load prices: {exc}", file=sys.stderr)
         return 2
 
     if args.json:
@@ -104,7 +104,7 @@ def _cmd_total(args: argparse.Namespace) -> int:
     try:
         prices = _load_prices_arg(args)
     except (ValueError, OSError) as exc:
-        print(f"agent-cost: could not load prices: {exc}", file=sys.stderr)
+        print(f"agent-spend-retrospective: could not load prices: {exc}", file=sys.stderr)
         return 2
 
     index = ResponseIndex()
@@ -138,7 +138,7 @@ def _cmd_top(args: argparse.Namespace) -> int:
     try:
         prices = _load_prices_arg(args)
     except (ValueError, OSError) as exc:
-        print(f"agent-cost: could not load prices: {exc}", file=sys.stderr)
+        print(f"agent-spend-retrospective: could not load prices: {exc}", file=sys.stderr)
         return 2
 
     rows = []
@@ -189,11 +189,11 @@ def _cmd_list(args: argparse.Namespace) -> int:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="agent-cost",
+        prog="agent-spend-retrospective",
         description="Read a finished agent session and explain where the money went.",
     )
     parser.add_argument("--version", action="version",
-                        version=f"agent-cost {__version__}")
+                        version=f"agent-spend-retrospective {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
 
     report = sub.add_parser("report", help="full cost report for one session")

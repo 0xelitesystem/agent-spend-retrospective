@@ -143,7 +143,7 @@ def repeated_response_transcript(tmp_path):
     """ONE API response written as three records that repeat its usage.
 
     This is the exact shape Claude Code writes and the exact shape that made
-    agent-cost overstate cost: output_tokens ramps up (300 -> 700 -> 1000) and
+    agent-spend-retrospective overstate cost: output_tokens ramps up (300 -> 700 -> 1000) and
     every record carries the same input/cache counts. The response is worth
     1,000,000 in + 1,000 out on Sonnet = $3.015, NOT three times that.
     """
